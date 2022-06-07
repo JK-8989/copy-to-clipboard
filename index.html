@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy-to-clipboard</title>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+    body {
+      background: #ddd;
+      font-family: 'Poppins', sans-serif;
+    }
+    .container {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .label {
+      padding: 10px;
+      font-size: 0.8em;
+    }
+    .copy-text {
+      border-radius: 10px;
+      padding: 5px;
+      background: white;
+    }
+    input {
+      border: none;
+      vertical-align:text-top;
+      padding-left: 8px;
+      outline: none;
+    }
+   button {
+     border: none;
+     background: rgb(163, 229, 255);
+     padding: 5px 5px 2px 5px;
+     border-radius: 5px;
+   }
+   #copy {
+    font-size: 1.5em;
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+   }
+   button:active {
+     background: rgb(126, 209, 242);
+   }
+   button::before {
+     content: 'Copied!';
+      position: absolute;
+      top: 0;
+      right: -10px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background: rgb(163, 229, 255);
+      color:  rgba(0, 0, 0, 0.5);
+     opacity: 0;
+      transition: display 0.5s linear;
+   }
+   button::after {
+     content: '';
+     width: 13px;
+     height: 13px;
+     background: rgb(163, 229, 255);
+     position: absolute;
+    top: 20px;
+    right: 15px;
+    transform: rotate(45deg);
+    z-index: -1;
+    opacity: 0;
+    transition: display 0.5s linear;
+   }
+   .copy-text.active button::before,
+   .copy-text.active button::after {
+    opacity: 1;
+   }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="label">
+      Magic Word:
+    </div>
+    <div class="copy-text">
+      <input type="text" class="text" value="Dreams Come True !">
+      <button>
+        <ion-icon id="copy" name="copy-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+  <script>
+    let copyText = document.querySelector('.copy-text');
+
+    copyText.querySelector('button').addEventListener('click', function(){
+      let input = copyText.querySelector('input.text');
+      input.select();
+      document.execCommand('copy');
+      copyText.classList.add('active');
+      window.getSelection().removeAllRanges();
+      setTimeout(function(){
+        copyText.classList.remove('active')
+      }, 2000)
+        })
+  
+  </script>
+</body>
+</html>
